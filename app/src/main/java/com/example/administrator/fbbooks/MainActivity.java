@@ -35,40 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callbackManager = CallbackManager.Factory.create();
-        setContentView(R.layout.activity_main);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int timeout=500;
-                int port = 1234;
-
-                try {
-                    String currentIP = InetAddress.getLocalHost().toString();
-                    String subnet = getSubnet(currentIP);
-                    System.out.println("subnet: " + subnet);
-
-                    for (int i=1;i<254;i++){
-
-                        String host = subnet + i;
-                        System.out.println("Checking :" + host);
-
-                        if (InetAddress.getByName(host).isReachable(timeout)){
-                            System.out.println(host + " is reachable");
-                            try {
-                                Socket connected = new Socket(subnet, port);
-                            }
-                            catch (Exception s) {
-                                System.out.println(s);
-                            }
-                        }
-                    }
-                }
-                catch(Exception e){
-                    System.out.println(e);
-                }
-            }
-        }).start();
-
         LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
         if(!isNetworkAvailable()){
             Toast.makeText(getApplicationContext(), "You are not connected to the internet",
